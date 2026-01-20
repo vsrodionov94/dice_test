@@ -3,12 +3,28 @@
 @tailwind utilities;
 
 html, body {
-  overflow-x: hidden;
+  overflow: hidden;
   width: 100%;
+  height: 100%;
+  position: fixed;
+  touch-action: manipulation;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+html {
+  font-size: 25px;
+}
+
+#root {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
 }
 
 body {
-  background-color: #0f212e;
+  background-color: #0d1117;
   color: #b1bad3;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
 }
@@ -30,19 +46,17 @@ input[type="range"] {
 
 input[type="range"]::-webkit-slider-thumb {
   -webkit-appearance: none;
-  height: 20px;
-  width: 20px;
-  border-radius: 50%;
-  background: #00e701;
+  height: 1px;
+  width: 1px;
+  background: transparent;
   cursor: pointer;
-  margin-top: -8px;
 }
 
 input[type="range"]::-webkit-slider-runnable-track {
   width: 100%;
-  height: 4px;
-  background: #2f4553;
-  border-radius: 2px;
+  height: 8px;
+  background: transparent;
+  border-radius: 4px;
 }
 
 .scrollbar-hide {

@@ -8,13 +8,16 @@ export default {
     extend: {
       colors: {
         stake: {
-          dark: '#0f212e',
-          darker: '#071824',
+          dark: '#1a1f2e',
+          darker: '#0d1117',
           accent: '#00e701',
           win: '#00e701',
           lose: '#ed4163',
           gray: '#2f4553',
-          light: '#b1bad3'
+          light: '#b1bad3',
+          hot: '#ed4163',
+          cold: '#3b82f6',
+          muted: '#6b7280'
         }
       }
     },

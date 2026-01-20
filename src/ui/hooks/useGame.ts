@@ -1,7 +1,10 @@
 import { useState, useCallback, useEffect } from 'react'
 import { api, BetResponse } from '../../api/dice'
 
-export type Condition = 'UNDER' | 'OVER'
+// UI uses HOT/COLD, API uses UNDER/OVER
+// HOT = UNDER (win if roll < target)
+// COLD = OVER (win if roll > target)
+export type Condition = 'HOT' | 'COLD'
 
 export interface GameState {
   balance: number
@@ -10,6 +13,13 @@ export interface GameState {
   isLoading: boolean
   initialized: boolean
   error: string | null
+  rollId: string
+}
+
+function generateRollId(): string {
+  const letter = String.fromCharCode(65 + Math.floor(Math.random() * 26))
+  const number = String(Math.floor(Math.random() * 1000)).padStart(3, '0')
+  return `${letter}-${number}`
 }
 
 export function useGame() {
@@ -19,7 +29,8 @@ export function useGame() {
     lastResult: null,
     isLoading: false,
     initialized: false,
-    error: null
+    error: null,
+    rollId: generateRollId()
   })
 
   const init = useCallback(async (initialBalance?: number) => {
@@ -33,7 +44,8 @@ export function useGame() {
         lastResult: null,
         isLoading: false,
         initialized: true,
-        error: null
+        error: null,
+        rollId: generateRollId()
       })
     } catch (err) {
       setState(prev => ({
@@ -51,14 +63,20 @@ export function useGame() {
   ): Promise<BetResponse | null> => {
     setState(prev => ({ ...prev, isLoading: true, error: null }))
 
+    // Map HOT/COLD to UNDER/OVER for API
+    // HOT wins if roll < target (UNDER)
+    // COLD wins if roll > target (OVER)
+    const apiCondition = condition === 'HOT' ? 'UNDER' : 'OVER'
+
     try {
-      const response = await api.bet({ amount, target, condition })
+      const response = await api.bet({ amount, target, condition: apiCondition })
       setState(prev => ({
         ...prev,
         balance: response.balance,
         nonce: response.nonce,
         lastResult: response,
-        isLoading: false
+        isLoading: false,
+        rollId: generateRollId()
       }))
       return response
     } catch (err) {

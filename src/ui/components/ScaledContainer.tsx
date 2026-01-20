@@ -1,7 +1,7 @@
 import { useState, useEffect, ReactNode } from 'react'
 
-const DESIGN_WIDTH = 390
-const DESIGN_HEIGHT = 844
+const DESIGN_WIDTH = 828
+const DESIGN_HEIGHT = 1600
 
 interface ScaledContainerProps {
   children: ReactNode
