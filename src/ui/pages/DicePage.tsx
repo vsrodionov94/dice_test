@@ -9,6 +9,7 @@ import { BetInput } from '../components/BetInput'
 import { ChipSelector } from '../components/ChipSelector'
 import { DiceDisplay } from '../components/DiceIcon'
 import { ScaledContainer } from '../components/ScaledContainer'
+import styles from './DicePage.module.css'
 
 export default function DicePage() {
   const game = useGame()
@@ -50,7 +51,7 @@ export default function DicePage() {
     if (amount === 'max') {
       setBetAmount(game.balance)
     } else {
-      setBetAmount(Math.min(amount, game.balance))
+      setBetAmount(prev => Math.min(prev + amount, game.balance))
     }
   }
 
@@ -59,8 +60,8 @@ export default function DicePage() {
   if (!game.initialized && !game.error) {
     return (
       <ScaledContainer>
-        <div className="w-full h-full flex items-center justify-center bg-[#10141c]">
-          <div className="text-white/60 text-xl">Загрузка...</div>
+        <div className={styles.loadingContainer}>
+          <div className={styles.loadingText}>Загрузка...</div>
         </div>
       </ScaledContainer>
     )
@@ -69,12 +70,12 @@ export default function DicePage() {
   if (game.error && !game.initialized) {
     return (
       <ScaledContainer>
-        <div className="w-full h-full flex items-center justify-center bg-[#10141c]">
-          <div className="text-center">
-            <div className="text-red-500 text-xl mb-4">{game.error}</div>
+        <div className={styles.loadingContainer}>
+          <div className={styles.errorContainer}>
+            <div className={styles.errorText}>{game.error}</div>
             <button
               onClick={() => game.init()}
-              className="px-6 py-3 bg-green-500 text-black rounded-lg font-semibold"
+              className={styles.retryButton}
             >
               Повторить
             </button>
@@ -86,22 +87,21 @@ export default function DicePage() {
 
   return (
     <ScaledContainer>
-      <div className="w-full h-full flex flex-col relative overflow-hidden bg-[#10141c]">
-        {/* Result Overlay */}
+      <div className={styles.page}>
         {showResult && game.lastResult && (
-          <div className="absolute inset-0 z-50 flex items-center justify-center bg-[#10141c]/95">
-            <div className="text-center px-4">
-              <div className="mb-4">
+          <div className={styles.resultOverlay}>
+            <div className={styles.resultContent}>
+              <div className={styles.resultDice}>
                 <DiceDisplay value={game.lastResult.roll} size="lg" win={game.lastResult.win} />
               </div>
-              <div className={`text-6xl font-bold mb-2 ${game.lastResult.win ? 'text-green-500' : 'text-red-500'}`}>
+              <div className={`${styles.resultNumber} ${game.lastResult.win ? styles.resultNumberWin : styles.resultNumberLose}`}>
                 {game.lastResult.roll}
               </div>
-              <div className={`text-2xl font-bold ${game.lastResult.win ? 'text-green-500' : 'text-red-500'}`}>
+              <div className={`${styles.resultText} ${game.lastResult.win ? styles.resultTextWin : styles.resultTextLose}`}>
                 {game.lastResult.win ? 'ВЫИГРЫШ!' : 'ПРОИГРЫШ'}
               </div>
               {game.lastResult.win && (
-                <div className="text-green-500 text-xl mt-2">
+                <div className={styles.resultPayout}>
                   +{game.lastResult.payout.toFixed(0)} ₽
                 </div>
               )}
@@ -109,13 +109,11 @@ export default function DicePage() {
           </div>
         )}
 
-        {/* Roll History */}
-        <div className="px-4 py-2">
+        <div className={styles.historySection}>
           <RollHistory history={history} />
         </div>
 
-        {/* Game Info */}
-        <div className="py-2">
+        <div className={styles.gameInfoSection}>
           <GameInfo
             rollId={game.rollId}
             balance={game.balance}
@@ -123,39 +121,32 @@ export default function DicePage() {
           />
         </div>
 
-        {/* HOT/COLD Stats */}
         <HotColdStats target={target} />
 
-        {/* Betting Panel - unified block */}
-        <div className="mx-4 bg-[#1c2232] rounded-[40px] p-6">
-          {/* Target Slider */}
+        <div className={styles.sliderPanel}>
           <TargetSlider
             value={target}
             onChange={setTarget}
             disabled={isDisabled}
           />
+        </div>
 
-          {/* Bet Buttons */}
-          <div className="pt-4 pb-5">
-            <BetButtons
-              onBet={handleBet}
-              target={target}
-              disabled={isDisabled || betAmount > game.balance || betAmount <= 0}
-              isLoading={game.isLoading}
-            />
-          </div>
+        <div className={styles.betButtonsSection}>
+          <BetButtons
+            onBet={handleBet}
+            target={target}
+            disabled={isDisabled || betAmount > game.balance || betAmount <= 0}
+            isLoading={game.isLoading}
+          />
+        </div>
 
-          {/* Bet Input */}
+        <div className={styles.betInputPanel}>
           <BetInput
             value={betAmount}
             onChange={setBetAmount}
             maxBet={game.balance}
             disabled={isDisabled}
           />
-        </div>
-
-        {/* Chip Selector */}
-        <div className="py-2 mt-auto">
           <ChipSelector
             onSelect={handleChipSelect}
             selectedAmount={betAmount}
@@ -164,9 +155,8 @@ export default function DicePage() {
           />
         </div>
 
-        {/* Error message */}
         {game.error && (
-          <div className="absolute bottom-32 left-4 right-4 p-3 bg-red-500/20 rounded-lg text-red-500 text-sm text-center">
+          <div className={styles.errorMessage}>
             {game.error}
           </div>
         )}

@@ -1,6 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 html, body {
   overflow: hidden;
@@ -11,10 +13,6 @@ html, body {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   user-select: none;
-}
-
-html {
-  font-size: 25px;
 }
 
 #root {
@@ -59,11 +57,19 @@ input[type="range"]::-webkit-slider-runnable-track {
   border-radius: 4px;
 }
 
-.scrollbar-hide {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+button {
+  border: none;
+  background: none;
+  cursor: pointer;
+  font-family: inherit;
 }
 
-.scrollbar-hide::-webkit-scrollbar {
-  display: none;
+button:disabled {
+  cursor: not-allowed;
+}
+
+input {
+  border: none;
+  outline: none;
+  font-family: inherit;
 }

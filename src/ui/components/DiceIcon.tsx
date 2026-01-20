@@ -1,51 +1,56 @@
+import styles from './DiceIcon.module.css'
+
 interface DiceIconProps {
   value: 1 | 2 | 3 | 4 | 5 | 6
   size?: 'sm' | 'md' | 'lg'
   color?: 'win' | 'lose' | 'neutral'
 }
 
-const dotPositions: Record<number, string[]> = {
-  1: ['top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'],
-  2: ['top-[20%] left-[20%]', 'bottom-[20%] right-[20%]'],
-  3: ['top-[20%] left-[20%]', 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2', 'bottom-[20%] right-[20%]'],
-  4: ['top-[20%] left-[20%]', 'top-[20%] right-[20%]', 'bottom-[20%] left-[20%]', 'bottom-[20%] right-[20%]'],
-  5: ['top-[20%] left-[20%]', 'top-[20%] right-[20%]', 'top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2', 'bottom-[20%] left-[20%]', 'bottom-[20%] right-[20%]'],
-  6: ['top-[20%] left-[20%]', 'top-[20%] right-[20%]', 'top-1/2 left-[20%] -translate-y-1/2', 'top-1/2 right-[20%] -translate-y-1/2', 'bottom-[20%] left-[20%]', 'bottom-[20%] right-[20%]']
+type DotPosition = { top: string; left: string; transform?: string }
+
+const dotPositionsSm: Record<number, DotPosition[]> = {
+  1: [{ top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }],
+  2: [{ top: '20%', left: '20%' }, { top: '80%', left: '80%', transform: 'translate(-100%, -100%)' }],
+  3: [{ top: '20%', left: '20%' }, { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, { top: '80%', left: '80%', transform: 'translate(-100%, -100%)' }],
+  4: [{ top: '20%', left: '20%' }, { top: '20%', left: '80%', transform: 'translateX(-100%)' }, { top: '80%', left: '20%', transform: 'translateY(-100%)' }, { top: '80%', left: '80%', transform: 'translate(-100%, -100%)' }],
+  5: [{ top: '20%', left: '20%' }, { top: '20%', left: '80%', transform: 'translateX(-100%)' }, { top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }, { top: '80%', left: '20%', transform: 'translateY(-100%)' }, { top: '80%', left: '80%', transform: 'translate(-100%, -100%)' }],
+  6: [{ top: '20%', left: '20%' }, { top: '20%', left: '80%', transform: 'translateX(-100%)' }, { top: '50%', left: '20%', transform: 'translateY(-50%)' }, { top: '50%', left: '80%', transform: 'translate(-100%, -50%)' }, { top: '80%', left: '20%', transform: 'translateY(-100%)' }, { top: '80%', left: '80%', transform: 'translate(-100%, -100%)' }]
 }
 
 const sizeClasses = {
-  sm: 'w-8 h-8',
-  md: 'w-12 h-12',
-  lg: 'w-20 h-20'
+  sm: styles.diceSm,
+  md: styles.diceMd,
+  lg: styles.diceLg
 }
 
 const dotSizeClasses = {
-  sm: 'w-1.5 h-1.5',
-  md: 'w-2 h-2',
-  lg: 'w-3 h-3'
+  sm: styles.dotSm,
+  md: styles.dotMd,
+  lg: styles.dotLg
 }
 
 const colorClasses = {
-  win: 'bg-stake-win/20 border-stake-win/40',
-  lose: 'bg-stake-lose/20 border-stake-lose/40',
-  neutral: 'bg-stake-gray/30 border-stake-gray/50'
+  win: styles.diceWin,
+  lose: styles.diceLose,
+  neutral: styles.diceNeutral
 }
 
 const dotColorClasses = {
-  win: 'bg-stake-win',
-  lose: 'bg-stake-lose',
-  neutral: 'bg-stake-light'
+  win: styles.dotWin,
+  lose: styles.dotLose,
+  neutral: styles.dotNeutral
 }
 
 export function DiceIcon({ value, size = 'md', color = 'neutral' }: DiceIconProps) {
-  const positions = dotPositions[value] || []
+  const positions = dotPositionsSm[value] || []
 
   return (
-    <div className={`${sizeClasses[size]} ${colorClasses[color]} rounded-lg border-2 relative`}>
+    <div className={`${styles.dice} ${sizeClasses[size]} ${colorClasses[color]}`}>
       {positions.map((pos, i) => (
         <div
           key={i}
-          className={`absolute ${pos} ${dotSizeClasses[size]} ${dotColorClasses[color]} rounded-full`}
+          className={`${styles.dot} ${dotSizeClasses[size]} ${dotColorClasses[color]}`}
+          style={pos}
         />
       ))}
     </div>
@@ -59,15 +64,13 @@ interface DiceDisplayProps {
 }
 
 export function DiceDisplay({ value, size = 'md', win }: DiceDisplayProps) {
-  // Convert number (1-36) to two dice: first * 6 + second - 5 = value
-  // 1 = 1_1, 2 = 1_2, ..., 6 = 1_6, 7 = 2_1, ..., 36 = 6_6
   const first = (Math.floor((value - 1) / 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6
   const second = (((value - 1) % 6) + 1) as 1 | 2 | 3 | 4 | 5 | 6
 
   const color = win === undefined ? 'neutral' : win ? 'win' : 'lose'
 
   return (
-    <div className="flex gap-2 justify-center">
+    <div className={styles.diceContainer}>
       <DiceIcon value={first} size={size} color={color} />
       <DiceIcon value={second} size={size} color={color} />
     </div>

@@ -1,0 +1,160 @@
+.page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  background-color: #10141c;
+}
+
+.resultOverlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(16, 20, 28, 0.95);
+}
+
+.resultContent {
+  text-align: center;
+  padding: 0 24px;
+}
+
+.resultDice {
+  margin-bottom: 24px;
+}
+
+.resultNumber {
+  font-family: 'Inter', sans-serif;
+  font-size: 120px;
+  font-weight: 800;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.resultNumberWin {
+  color: #6bff8b;
+}
+
+.resultNumberLose {
+  color: #ff6869;
+}
+
+.resultText {
+  font-family: 'Inter', sans-serif;
+  font-size: 48px;
+  font-weight: 800;
+}
+
+.resultTextWin {
+  color: #6bff8b;
+}
+
+.resultTextLose {
+  color: #ff6869;
+}
+
+.resultPayout {
+  color: #6bff8b;
+  font-family: 'Inter', sans-serif;
+  font-size: 40px;
+  font-weight: 700;
+  margin-top: 16px;
+}
+
+.historySection {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  min-height: 112px;
+}
+
+.gameInfoSection {
+  padding: 24px;
+}
+
+.statsSection {
+  position: relative;
+  padding: 0 24px;
+}
+
+/* Slider panel - separate background */
+.sliderPanel {
+  margin: 0 24px;
+  background-color: #1c2232;
+  border-radius: 40px;
+  padding: 24px 10px;
+}
+
+/* Bet buttons - NO background panel */
+.betButtonsSection {
+  padding: 32px 44px 48px;
+}
+
+/* BetInput + ChipSelector panel - combined background */
+.betInputPanel {
+  margin: 0 24px;
+  background-color: #1c2232;
+  border-radius: 30px;
+  padding: 24px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.errorMessage {
+  position: absolute;
+  bottom: 180px;
+  left: 24px;
+  right: 24px;
+  padding: 16px;
+  background-color: rgba(255, 104, 105, 0.2);
+  border-radius: 16px;
+  color: #ff6869;
+  font-family: 'Inter', sans-serif;
+  font-size: 18px;
+  text-align: center;
+}
+
+.loadingContainer {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #10141c;
+}
+
+.loadingText {
+  font-family: 'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 40px;
+  font-weight: 600;
+}
+
+.errorContainer {
+  text-align: center;
+}
+
+.errorText {
+  font-family: 'Inter', sans-serif;
+  color: #ff6869;
+  font-size: 36px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.retryButton {
+  padding: 16px 32px;
+  background-color: #6bff8b;
+  color: #000;
+  border-radius: 16px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+}

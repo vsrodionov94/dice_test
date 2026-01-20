@@ -1,3 +1,5 @@
+import styles from './RollHistory.module.css'
+
 export interface HistoryItem {
   id: number
   roll: number
@@ -7,40 +9,37 @@ export interface HistoryItem {
   target: number
   condition: 'HOT' | 'COLD'
   rollId?: string
+  timestamp?: Date
+  multiplier?: number
 }
 
 interface RollHistoryProps {
   history: HistoryItem[]
 }
 
-function DiceSmall({ value, isBlack }: { value: number; isBlack?: boolean }) {
-  const dotPositions: Record<number, [number, number][]> = {
-    1: [[1, 1]],
-    2: [[0, 0], [2, 2]],
-    3: [[0, 0], [1, 1], [2, 2]],
-    4: [[0, 0], [0, 2], [2, 0], [2, 2]],
-    5: [[0, 0], [0, 2], [1, 1], [2, 0], [2, 2]],
-    6: [[0, 0], [0, 2], [1, 0], [1, 2], [2, 0], [2, 2]]
-  }
+const dotPositions: Record<number, [number, number][]> = {
+  1: [[1, 1]],
+  2: [[0, 0], [2, 2]],
+  3: [[0, 0], [1, 1], [2, 2]],
+  4: [[0, 0], [0, 2], [2, 0], [2, 2]],
+  5: [[0, 0], [0, 2], [1, 1], [2, 0], [2, 2]],
+  6: [[0, 0], [0, 2], [1, 0], [1, 2], [2, 0], [2, 2]]
+}
 
+function DiceSmall({ value, isBlack }: { value: number; isBlack?: boolean }) {
   const positions = dotPositions[value] || []
-  const bgColor = isBlack ? '#161514' : '#f6ebe5'
-  const dotColor = isBlack ? '#ffffff' : '#312f2e'
 
   return (
     <div
-      className="w-7 h-7 rounded-lg relative"
-      style={{ backgroundColor: bgColor }}
+      className={`${styles.diceSmall} ${isBlack ? styles.diceSmallBlack : styles.diceSmallWhite}`}
     >
       {positions.map(([row, col], i) => (
         <div
           key={i}
-          className="absolute w-1.5 h-1.5 rounded-full"
+          className={`${styles.diceDot} ${isBlack ? styles.diceDotWhite : styles.diceDotBlack}`}
           style={{
-            backgroundColor: dotColor,
-            opacity: 0.9,
-            top: `${row * 8 + 8}px`,
-            left: `${col * 8 + 8}px`
+            top: row * 6 + 4,
+            left: col * 6 + 4
           }}
         />
       ))}
@@ -48,45 +47,102 @@ function DiceSmall({ value, isBlack }: { value: number; isBlack?: boolean }) {
   )
 }
 
-function DicePair({ value, isActive }: { value: number; isActive?: boolean }) {
+function DicePair({ value }: { value: number }) {
   const first = Math.floor((value - 1) / 6) + 1
   const second = ((value - 1) % 6) + 1
 
   return (
-    <div
-      className={`flex gap-1.5 p-2.5 rounded-xl ${
-        isActive
-          ? 'bg-[#2b3348] border-4 border-[#d74545]'
-          : 'bg-[#2b3348] opacity-80'
-      }`}
-    >
+    <>
       <DiceSmall value={first} isBlack />
       <DiceSmall value={second} />
+    </>
+  )
+}
+
+function ActiveCard({ item }: { item: HistoryItem }) {
+  const result = item.win ? item.payout : -item.amount
+
+  return (
+    <div className={styles.cardActive}>
+      <div className={styles.cardActiveHeader}>
+        <DicePair value={item.roll} />
+      </div>
+      <div className={styles.cardActiveBody}>
+        <div className={styles.row}>
+          <span className={styles.label}>Сумма:</span>
+          <span className={styles.value}>{item.amount}</span>
+        </div>
+        <div className={styles.row}>
+          <span className={styles.label}>Итог:</span>
+          <span className={`${styles.value} ${item.win ? styles.valueWin : styles.valueLose}`}>
+            {result > 0 ? '+' : ''}{result}
+          </span>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+function ExpandedCard({ item, index }: { item: HistoryItem; index: number }) {
+  const result = item.win ? item.payout : -item.amount
+  const time = item.timestamp
+    ? item.timestamp.toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
+    : '—'
+  const multiplier = item.multiplier ?? (item.win ? (item.payout / item.amount).toFixed(2) : '0.00')
+
+  return (
+    <div className={styles.cardExpanded}>
+      <div className={styles.cardExpandedHeader}>
+        <div className={styles.cardExpandedDices}>
+          <DicePair value={item.roll} />
+        </div>
+        <span className={styles.cardExpandedInfo}>Бросок №{index + 1}</span>
+        <span className={styles.cardExpandedTime}>{time} (по МСК)</span>
+      </div>
+      <div className={styles.cardExpandedBody}>
+        <div className={styles.cardExpandedRow}>
+          <div className={styles.rowHalf}>
+            <span className={styles.label}>Сумма:</span>
+            <span className={styles.value}>{item.amount}</span>
+          </div>
+          <div className={styles.rowHalf}>
+            <span className={styles.label}>Кф:</span>
+            <span className={styles.value}>{multiplier}</span>
+          </div>
+        </div>
+        <div className={styles.cardExpandedRowCenter}>
+          <div className={styles.rowCentered}>
+            <span className={styles.label}>Итог:</span>
+            <span className={`${styles.value} ${item.win ? styles.valueWin : styles.valueLose}`}>
+              {result > 0 ? '+' : ''}{result}
+            </span>
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
 
 export function RollHistory({ history }: RollHistoryProps) {
   return (
-    <div className="flex items-center gap-3">
-      {/* Menu button */}
-      <button className="w-11 h-11 rounded-2xl bg-white/5 border-2 border-white/20 flex items-center justify-center text-gray-200">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+    <div className={styles.container}>
+      <button className={styles.menuButton}>
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
           <path d="M4 6h16M4 12h16M4 18h7" />
         </svg>
       </button>
 
-      {/* History label */}
-      <div className="flex flex-col text-white/40 text-xs font-medium leading-tight">
+      <div className={styles.historyLabel}>
         <span>История</span>
         <span>бросков</span>
       </div>
 
-      {/* Dice history */}
-      <div className="flex gap-2 overflow-x-auto scrollbar-hide flex-1">
+      <div className={styles.diceHistory}>
         {history.length !== 0 && (
           history.slice(0, 5).map((item, i) => (
-            <DicePair key={item.id} value={item.roll} isActive={i === 0} />
+            i === 0
+              ? <ActiveCard key={item.id} item={item} />
+              : <ExpandedCard key={item.id} item={item} index={i} />
           ))
         )}
       </div>

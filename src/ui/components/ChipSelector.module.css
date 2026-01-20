@@ -1,0 +1,69 @@
+.container {
+  display: flex;
+  gap: 20px;
+  overflow-x: auto;
+  padding: 8px 24px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.container::-webkit-scrollbar {
+  display: none;
+}
+
+.chip {
+  position: relative;
+  width: 110px;
+  height: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100px;
+  background-color: #1c2232;
+  border: 3px solid transparent;
+  transition: transform 0.15s ease-out, box-shadow 0.15s ease-out;
+  flex-shrink: 0;
+  cursor: pointer;
+}
+
+.chip:active {
+  transform: scale(0.9);
+}
+
+.chipSelected {
+  transform: scale(1.05);
+}
+
+.chipSelected:active {
+  transform: scale(0.95);
+}
+
+.chip:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+@keyframes chipPulse {
+  0% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+  50% {
+    box-shadow: 0 0 15px 5px currentColor;
+  }
+  100% {
+    box-shadow: 0 0 0 0 currentColor;
+  }
+}
+
+.chipClicked {
+  animation: chipPulse 0.3s ease-out;
+}
+
+.chipLabel {
+  font-family: Impact, sans-serif;
+  font-size: 30px;
+  font-weight: normal;
+  color: #ffffff;
+  line-height: 1;
+  text-align: center;
+}

@@ -1,0 +1,163 @@
+.container {
+  width: 780px;
+  background-color: #1c2232;
+  border-radius: 40px;
+  padding: 24px;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.leftSection {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+}
+
+.label {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.6);
+  font-size: 24px;
+  line-height: 1;
+  width: 100%;
+}
+
+.labelLeft {
+  text-align: center;
+}
+
+.labelRight {
+  text-align: right;
+}
+
+.dicePairDisplay {
+  display: flex;
+  gap: 24px;
+  justify-content: center;
+  width: 100%;
+}
+
+.dice3d {
+  width: 82px;
+  height: 82px;
+  border-radius: 24px;
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+}
+
+.dice3dBlack {
+  background: linear-gradient(180deg, #5c5a58 0%, #2a2a2a 100%);
+}
+
+.dice3dWhite {
+  background: linear-gradient(180deg, #fff7f0 0%, #b2b2b2 100%);
+}
+
+.dice3dInner {
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  right: 6px;
+  bottom: 6px;
+  border-radius: 18px;
+}
+
+.dice3dInnerBlack {
+  background-color: #161514;
+}
+
+.dice3dInnerWhite {
+  background-color: #f6ebe5;
+}
+
+.dice3dDot {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  opacity: 0.9;
+}
+
+.dice3dDotWhite {
+  background-color: #ffffff;
+}
+
+.dice3dDotBlack {
+  background-color: #312f2e;
+}
+
+.fairPlayLogo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.logoOuter {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: radial-gradient(circle, rgba(100, 100, 150, 0.3) 0%, transparent 70%);
+}
+
+.logoInner {
+  width: 130px;
+  height: 130px;
+  border-radius: 50%;
+  border: 3px solid rgba(255, 255, 255, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, rgba(60, 60, 80, 0.8) 0%, rgba(30, 30, 50, 0.9) 100%);
+}
+
+.logoText {
+  text-align: center;
+}
+
+.logoTitle {
+  font-family: 'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.logoSubtitle {
+  font-family: 'Inter', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.4);
+  line-height: 1.2;
+  margin-top: 4px;
+}
+
+.rightSection {
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.balance {
+  color: #ffffff;
+  font-family: 'Inter', sans-serif;
+  font-size: 60px;
+  font-weight: 800;
+  line-height: 1;
+  height: 82px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}

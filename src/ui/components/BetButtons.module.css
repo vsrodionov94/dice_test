@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  gap: 24px;
+}
+
+.button {
+  flex: 1;
+  height: 148px;
+  color: #ffffff;
+  font-weight: bold;
+  border-radius: 40px;
+  transition: filter 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.button:hover:not(:disabled) {
+  filter: brightness(1.1);
+}
+
+.button:disabled {
+  opacity: 0.5;
+}
+
+.buttonHot {
+  background-color: #d74545;
+}
+
+.buttonCold {
+  background-color: #416ae2;
+  flex: none;
+  width: 365px;
+}
+
+.rangeText {
+  font-size: 28px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.6);
+  line-height: 1;
+}
+
+.buttonText {
+  font-size: 48px;
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  line-height: 1;
+}

@@ -1,0 +1,100 @@
+.container {
+  width: 706px;
+  height: 222px;
+  margin: 0 auto;
+}
+
+.markers {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  height: 48px;
+  margin-bottom: 24px;
+}
+
+.marker {
+  font-family: 'Inter', sans-serif;
+  font-weight: 800;
+  color: #ffffff;
+  font-size: 28px;
+  width: 58px;
+  text-align: center;
+  line-height: 1;
+}
+
+.markerActive {
+  font-size: 48px;
+}
+
+.dotsRow {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 48px;
+  height: 16px;
+}
+
+.dot {
+  width: 4px;
+  height: 16px;
+  border-radius: 2px;
+}
+
+.dotHot {
+  background-color: #d74545;
+}
+
+.dotCold {
+  background-color: #416ae2;
+}
+
+.sliderWrapper {
+  position: relative;
+  height: 86px;
+}
+
+.sliderTrack {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 33px;
+  height: 20px;
+  border-radius: 10px;
+}
+
+.sliderInput {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+  z-index: 20;
+}
+
+.sliderInput:disabled {
+  cursor: not-allowed;
+}
+
+.sliderThumb {
+  position: absolute;
+  top: 0;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10;
+  background: linear-gradient(180deg, #ffffff 0%, #e8e8e8 50%, #c0c0c0 100%);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.sliderThumbInner {
+  position: absolute;
+  top: 8px;
+  left: 8px;
+  right: 8px;
+  bottom: 8px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #f8f8f8 0%, #e0e0e0 100%);
+  box-shadow: inset 0 2px 8px rgba(255, 255, 255, 0.9), inset 0 -2px 8px rgba(0, 0, 0, 0.1);
+}

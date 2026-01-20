@@ -1,3 +1,5 @@
+import styles from './BetButtons.module.css'
+
 type BetType = 'HOT' | 'COLD'
 
 interface BetButtonsProps {
@@ -8,20 +10,18 @@ interface BetButtonsProps {
 }
 
 export function BetButtons({ onBet, target, disabled, isLoading }: BetButtonsProps) {
-  // HOT = numbers below target (1 to target-1)
-  // COLD = numbers above target (target+1 to 36)
   const hotRange = `1-${target - 1}`
   const coldRange = `${target + 1}-36`
 
   return (
-    <div className="flex gap-4">
+    <div className={styles.container}>
       <button
         onClick={() => onBet('HOT')}
         disabled={disabled || isLoading}
-        className="flex-1 py-5 bg-[#d74545] text-white font-bold rounded-2xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className={`${styles.button} ${styles.buttonHot}`}
       >
-        <div className="text-sm font-extrabold text-white/60 mb-0.5">{hotRange}</div>
-        <div className="text-3xl" style={{ fontFamily: 'Impact, sans-serif' }}>
+        <div className={styles.rangeText}>{hotRange}</div>
+        <div className={styles.buttonText}>
           {isLoading ? 'Бросаем...' : 'Ставка'}
         </div>
       </button>
@@ -29,10 +29,10 @@ export function BetButtons({ onBet, target, disabled, isLoading }: BetButtonsPro
       <button
         onClick={() => onBet('COLD')}
         disabled={disabled || isLoading}
-        className="flex-1 py-5 bg-[#416ae2] text-white font-bold rounded-2xl hover:brightness-110 disabled:opacity-50 disabled:cursor-not-allowed transition-all"
+        className={`${styles.button} ${styles.buttonCold}`}
       >
-        <div className="text-sm font-extrabold text-white/60 mb-0.5">{coldRange}</div>
-        <div className="text-3xl" style={{ fontFamily: 'Impact, sans-serif' }}>
+        <div className={styles.rangeText}>{coldRange}</div>
+        <div className={styles.buttonText}>
           {isLoading ? 'Бросаем...' : 'Ставка'}
         </div>
       </button>

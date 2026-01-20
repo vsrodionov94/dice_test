@@ -1,0 +1,74 @@
+.diceContainer {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+}
+
+.dice {
+  border-radius: 8px;
+  border-width: 2px;
+  border-style: solid;
+  position: relative;
+}
+
+.diceSm {
+  width: 32px;
+  height: 32px;
+}
+
+.diceMd {
+  width: 48px;
+  height: 48px;
+}
+
+.diceLg {
+  width: 80px;
+  height: 80px;
+}
+
+.diceWin {
+  background-color: rgba(34, 197, 94, 0.2);
+  border-color: rgba(34, 197, 94, 0.4);
+}
+
+.diceLose {
+  background-color: rgba(237, 65, 99, 0.2);
+  border-color: rgba(237, 65, 99, 0.4);
+}
+
+.diceNeutral {
+  background-color: rgba(47, 69, 83, 0.3);
+  border-color: rgba(47, 69, 83, 0.5);
+}
+
+.dot {
+  position: absolute;
+  border-radius: 50%;
+}
+
+.dotSm {
+  width: 6px;
+  height: 6px;
+}
+
+.dotMd {
+  width: 8px;
+  height: 8px;
+}
+
+.dotLg {
+  width: 12px;
+  height: 12px;
+}
+
+.dotWin {
+  background-color: #22c55e;
+}
+
+.dotLose {
+  background-color: #ed4163;
+}
+
+.dotNeutral {
+  background-color: #b1bad3;
+}

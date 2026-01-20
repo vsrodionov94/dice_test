@@ -1,4 +1,5 @@
 import { useState, useEffect, ReactNode } from 'react'
+import styles from './ScaledContainer.module.css'
 
 const DESIGN_WIDTH = 828
 const DESIGN_HEIGHT = 1600
@@ -24,15 +25,15 @@ export function ScaledContainer({ children }: ScaledContainerProps) {
   }, [])
 
   return (
-    <div className="w-screen h-screen flex items-center justify-center bg-stake-darker overflow-hidden">
+    <div className={styles.wrapper}>
       <div
+        className={styles.container}
         style={{
           width: DESIGN_WIDTH,
           height: DESIGN_HEIGHT,
           transform: `scale(${scale})`,
           transformOrigin: 'center center',
         }}
-        className="bg-stake-darker relative"
       >
         {children}
       </div>
